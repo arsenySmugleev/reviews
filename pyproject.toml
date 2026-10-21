@@ -1,0 +1,18 @@
+[project]
+name = "fastapi"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Arseny",email = "smugleevv@gmail.com"}
+]
+requires-python = ">=3.12"
+dependencies = [
+    "sqlalchemy (>=2.1.6,<3.0.0)",
+    "alembic (>=1.20.0,<2.0.0)",
+    "pydantic (>=2.14.1,<3.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
