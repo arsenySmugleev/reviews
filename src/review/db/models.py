@@ -22,7 +22,6 @@ class ReviewModel(Base):
     doctor_id: Mapped[UUID] = mapped_column(
         PG_UUID(as_uuid=True),
         nullable=False,
-        index=True,
     )
     author_name: Mapped[str] = mapped_column(sa.String(200), nullable=False)
     rating: Mapped[int] = mapped_column(sa.Integer(), nullable=False)
@@ -31,4 +30,9 @@ class ReviewModel(Base):
         sa.DateTime(timezone=True),
         nullable=False,
         server_default=func.now(),
+    )
+    idempotency_key: Mapped[UUID] = mapped_column(
+        PG_UUID(as_uuid=True),
+        nullable=False,
+        unique=True,
     )

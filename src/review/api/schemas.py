@@ -3,7 +3,7 @@ from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from src.domain import MAX_RATING, MIN_RATING
+from src.review.domain import MAX_RATING, MIN_RATING, Review
 
 
 class ReviewCreate(BaseModel):
@@ -24,12 +24,12 @@ class ReviewResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     @classmethod
-    def from_domain(cls, review) -> "ReviewResponse":
+    def from_domain(cls, review: Review) -> "ReviewResponse":
         return cls(
             id=review.id,
             doctor_id=review.doctor_id,
-            author_name=review.author_name.value,
-            rating=review.rating.value,
-            text=review.text.value,
+            author_name=review.author_name,
+            rating=review.rating,
+            text=review.text,
             created_at=review.created_at,
         )

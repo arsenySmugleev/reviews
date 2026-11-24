@@ -1,8 +1,9 @@
 from fastapi import Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from src.adapters.db import SqlAlchemyReviewRepository, get_session
-from src.application import CreateReview, ListReviewsByDoctor
+from src.review.create_review import CreateReview
+from src.review.db import SqlAlchemyReviewRepository, get_session
+from src.review.list_reviews import ListReviewsByDoctor
 
 
 def get_create_review(

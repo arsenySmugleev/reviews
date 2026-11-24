@@ -1,10 +1,11 @@
 from uuid import UUID
 
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, Header, status
 
-from src.adapters.api.dependencies import get_create_review, get_list_reviews_by_doctor
-from src.adapters.api.schemas import ReviewCreate, ReviewResponse
-from src.application import CreateReview, CreateReviewInput, ListReviewsByDoctor
+from src.review.api.dependencies import get_create_review, get_list_reviews_by_doctor
+from src.review.api.schemas import ReviewCreate, ReviewResponse
+from src.review.create_review import CreateReview, CreateReviewInput
+from src.review.list_reviews import ListReviewsByDoctor
 
 router = APIRouter(prefix="/api/v1", tags=["reviews"])
 
@@ -17,6 +18,7 @@ router = APIRouter(prefix="/api/v1", tags=["reviews"])
 async def create_review(
     body: ReviewCreate,
     use_case: CreateReview = Depends(get_create_review),
+    idempotency_key: UUID = Header(..., alias="Idempotency-Key"),
 ) -> ReviewResponse:
     review = await use_case.execute(
         CreateReviewInput(
@@ -24,6 +26,7 @@ async def create_review(
             author_name=body.author_name,
             rating=body.rating,
             text=body.text,
+            idempotency_key=idempotency_key,
         )
     )
     return ReviewResponse.from_domain(review)

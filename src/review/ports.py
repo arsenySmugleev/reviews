@@ -1,7 +1,7 @@
 from typing import Protocol
 from uuid import UUID
 
-from src.domain import Review
+from src.review.domain import Review
 
 
 class ReviewRepository(Protocol):
@@ -9,4 +9,7 @@ class ReviewRepository(Protocol):
         ...
 
     async def list_by_doctor(self, doctor_id: UUID) -> list[Review]:
+        ...
+
+    async def get_by_idempotency_key(self, key: UUID) -> Review | None:
         ...

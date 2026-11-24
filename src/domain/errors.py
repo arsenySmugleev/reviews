@@ -1,6 +1,0 @@
-class DomainError(Exception):
-    ...
-
-
-class InvalidReviewError(DomainError):
-    ...

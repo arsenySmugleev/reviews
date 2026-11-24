@@ -1,7 +1,7 @@
 from uuid import UUID
 
-from src.domain import Review
-from src.ports import ReviewRepository
+from src.review.domain import Review
+from src.review.ports import ReviewRepository
 
 
 class ListReviewsByDoctor:
