@@ -1,0 +1,35 @@
+services:
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_DB: reviews
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5434:5432"
+    volumes:
+      - reviews_pg_data:/var/lib/postgresql/data
+    networks:
+      - reviews-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d reviews"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  adminer:
+    image: adminer
+    ports:
+      - "8081:8080"
+    networks:
+      - reviews-network
+    environment:
+      ADMINER_DEFAULT_SERVER: postgres
+
+networks:
+  reviews-network:
+    driver: bridge
+
+volumes:
+  reviews_pg_data:
